@@ -43,7 +43,7 @@ class InitApp extends StatelessWidget {
       title: 'gsk',
       home: const SplashScreen(),
       routes: {
-        '/favorite_recipes_screen': (context) => const Favorite Recipes Screen(),
+        '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
         '/new_recipe_screen': (context) => const NewRecipeScreen(),
         '/main_recipe_screen': (context) => const MainRecipeScreen(),
       },
