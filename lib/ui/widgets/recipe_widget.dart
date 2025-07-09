@@ -21,10 +21,9 @@ class RecipeWidget extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          margin: const EdgeInsets.all(5),
-          padding: const EdgeInsets.all(5),
-        ),
+          borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: ListTile(
           tileColor: !Provider.of<RecipeClass>(context).isDark
             ? Colors.blue[100]

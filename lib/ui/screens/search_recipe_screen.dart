@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrostore/models/recipe_model.dart';
+import 'package:retrostore/ui/widgets/recipe_widget.dart';
 
 // ignore: must_be_immutable
 class SearchRecipeScreen extends StatefulWidget {
