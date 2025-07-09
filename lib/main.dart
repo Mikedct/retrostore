@@ -35,9 +35,10 @@ class InitApp extends StatelessWidget {
       : ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.blue[200],
-        dialogTheme: DialogTheme (
-          backgroundColor: Colors.blue[200],
-        ),
+        dialogTheme: const DialogThemeData(
+        backgroundColor: Colors.blueAccent, // adjust as needed
+        elevation: 5,
+      ),
         primaryColor: Colors.blue [200]),
   // Theme Data
       title: 'gsk',
