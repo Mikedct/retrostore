@@ -21,9 +21,9 @@ class RecipeWidget extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10)),
-        margin: const EdgeInsets.all(5),
-        padding: const EdgeInsets.all(5),
+            borderRadius: BorderRadius.circular(10)),
+          margin: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5), 
         child: ListTile(
           tileColor: !Provider.of<RecipeClass>(context).isDark
             ? Colors.blue[100]
@@ -34,28 +34,24 @@ class RecipeWidget extends StatelessWidget {
                   color: !Provider.of<RecipeClass>(context).isDark
                       ? Colors.blue
                       : null,
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                  borderRadius: BorderRadius.circular(8)),
                 width: 70,
                 height: double.infinity,
                 child: const Center(
                   child: CircleAvatar(
                     backgroundImage: AssetImage('img/logo.png'),
-                  ),
-                ),
-              )
-            : Image.file(
+                  )))
+                : Image.file(
                 recipeModel.image!,
                 width: 70,
                 height: double.infinity,
               ),
-          title: Text(recipeModel.nama),
-          subtitle: Text('${recipeModel.durasiMasak} mins'),
-          trailing: InkWell(
-            onTap: () {
-              Provider.of<RecipeClass>(context, listen: false)
-                  .updateIsFavorite(recipeModel);
-            },
+              title: Text(recipeModel.nama),
+              subtitle: Text('${recipeModel.durasiMasak} mins'),
+              trailing: InkWell(
+                onTap: () {
+                  Provider.of<RecipeClass>(context, listen: false).updateIsFavorite(recipeModel);
+                },
             child: recipeModel.isFavorite
               ? const Icon(
                   Icons.favorite,
@@ -64,7 +60,7 @@ class RecipeWidget extends StatelessWidget {
               : const Icon(
                   Icons.favorite_border,
                   color: Colors.red,
-                ),
+              ),
           ),
         ),
       ),
