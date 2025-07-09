@@ -3,7 +3,7 @@ import 'package:retrostore/ui/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/recipe_provider.dart';
-import '../../widgets/recipe_widget.dart';
+import '../widgets/recipe_widget.dart';
 
 class FavoriteRecipesScreen extends StatelessWidget {
   const FavoriteRecipesScreen({super.key});

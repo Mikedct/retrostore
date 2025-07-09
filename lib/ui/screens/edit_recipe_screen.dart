@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:retrostore/models/recipe_model.dart';
 import 'package:provider/provider.dart';
-import '../providers/recipe_provider.dart';
+import '../../providers/recipe_provider.dart';
 
 class EditRecipeScreen extends StatefulWidget {
   final RecipeModel recipeModel;
