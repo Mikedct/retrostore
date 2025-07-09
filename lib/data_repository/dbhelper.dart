@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package: bukuresep/models/recipe_model.dart';
-import 'package: path_provider/path_provider.dart';
+import 'package:retrostore/models/recipe_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -47,7 +46,7 @@ Future<Database> connectToDatabase() async{
     );
   }
   Future<List<RecipeModel>> getAllRecipes() async{
-    List<Map<String, dynamic>> tasks await database.query (tableName);
+    List<Map<String, dynamic>> tasks = await database.query (tableName);
     return tasks.map((e) => RecipeModel.fromMap(e)).toList();
   }
   
