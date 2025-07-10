@@ -14,7 +14,7 @@ class MainGameScreen extends StatelessWidget {
     return Consumer<GameClass>(
       builder: (BuildContext context, myProvider, Widget? child) => Scaffold(
         appBar: AppBar(
-          title: const Text('Resep'),
+          title: const Text('List Game'),
           actions: [
             InkWell(
               onTap: () => Navigator.of(context).push(

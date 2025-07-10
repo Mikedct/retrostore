@@ -39,7 +39,7 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
               Icons.search,
               color: Colors.white,
             ),
-            hintText: "Cari Resep",
+            hintText: "Cari Game",
             hintStyle: TextStyle(color: Colors.white),
           ),
         ),
@@ -64,7 +64,7 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
                 },
               )
             : const Center(
-                child: Text('Resep tidak ditemukan'),
+                child: Text('Game tidak ditemukan'),
               ),
       ),
     );

@@ -38,7 +38,7 @@ class _DrawerListState extends State<DrawerList> {
             },
           ),
           ListTile(
-            title: const Text('Resep Favorit'),
+            title: const Text('Game Favorit'),
             leading: const Icon(
               Icons.favorite,
               color: Colors.red,
