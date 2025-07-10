@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('img/logo.png'), // pastikan gambar tersedia
+              backgroundImage: AssetImage('img/RetroStore.png'), // pastikan gambar tersedia
             ),
           ),
           SizedBox(height: 20),

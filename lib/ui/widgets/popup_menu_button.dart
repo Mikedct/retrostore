@@ -34,11 +34,11 @@ class MyPopupMenuButton extends StatelessWidget {
       itemBuilder: (context) => [
         const PopupMenuItem(
           value: 0,
-          child: Text('Buka Menu'),
+          child: Text('Buka Game', style: TextStyle(color: Colors.black)),
         ),
         const PopupMenuItem(
           value: 1,
-          child: Text('Tentang'),
+          child: Text('About', style: TextStyle(color: Colors.black)),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
@@ -47,7 +47,7 @@ class MyPopupMenuButton extends StatelessWidget {
             children: const [
               Icon(Icons.exit_to_app_outlined, color: Colors.red),
               SizedBox(width: 10),
-              Text('Keluar'),
+              Text('Keluar', style: TextStyle(color: Colors.black)),
             ],
           ),
         ),
