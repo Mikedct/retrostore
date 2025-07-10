@@ -14,7 +14,7 @@ class DbHelper {
   final String isFavoriteColumn = 'isFavorite';
   final String bahanColumn = 'bahan';
   final String langkahColumn = 'langkah';
-  final String durasiMasakColumn = 'durasi Masak';
+  final String durasiMasakColumn = 'durasiMasak';
   final String imageColumn = 'image';
 
   initDatabase() async{
@@ -31,7 +31,7 @@ Future<Database> connectToDatabase() async{
         'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,'
         '$namaColumn TEXT, $durasiMasakColumn INTEGER,'
         '$isFavoriteColumn INTEGER, $bahanColumn TEXT,'
-        '$langkahColumn Column TEXT, $imageColumn TEXT)');
+        '$langkahColumn TEXT, $imageColumn TEXT)');
       },
       onUpgrade: (db, oldVersion, newVersion){
         db.execute(
