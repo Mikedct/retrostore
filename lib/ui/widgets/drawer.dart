@@ -20,7 +20,7 @@ class _DrawerListState extends State<DrawerList> {
           children: [
             const SizedBox(height: 50),
             const CircleAvatar(
-              backgroundImage: AssetImage('img/logo.png'),
+              backgroundImage: AssetImage('img/RetroStore.png'),
               radius: 50,
             ),
             const SizedBox(height: 10),
