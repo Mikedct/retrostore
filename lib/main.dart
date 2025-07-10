@@ -5,6 +5,7 @@ import 'package:retrostore/ui/screens/favorite_game_screen.dart';
 import 'package:retrostore/ui/screens/main_game_screen.dart';
 import 'package:retrostore/ui/screens/new_game_screen.dart';
 import 'package:retrostore/ui/screens/splash_screen.dart';
+import 'package:retrostore/ui/screens/settings_screen.dart';
 import 'data_repository/dbhelper.dart';
 
 void main() async {
@@ -51,6 +52,7 @@ class InitApp extends StatelessWidget {
         '/main_game_screen': (context) => const MainGameScreen(),
         '/favorite_games_screen': (context) => const FavoriteGamesScreen(),
         '/new_game_screen': (context) => const NewGameScreen(),
+        '/settings': (context) => const SettingsScreen(),
       },
     );
   }

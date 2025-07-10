@@ -56,7 +56,8 @@ class _DrawerListState extends State<DrawerList> {
                   color: isDark ? Colors.white : Colors.black),
               title: const Text('Pengaturan'),
               onTap: () {
-                // Tambahkan navigasi ke halaman pengaturan jika ada
+                Navigator.pop(context); // Tutup drawer dulu
+                Navigator.pushNamed(context, '/settings');
               },
             ),
             const Spacer(),
