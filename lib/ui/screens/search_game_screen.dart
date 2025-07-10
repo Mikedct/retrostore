@@ -33,10 +33,12 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
           onChanged: filterGames,
           style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
-            icon: Icon(Icons.search, color: Colors.white),
-            hintText: "Cari Game",
-            hintStyle: TextStyle(color: Colors.white70),
-            border: InputBorder.none,
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            hintText: "Cari Resep",
+            hintStyle: TextStyle(color: Colors.white),
           ),
         ),
         actions: <Widget>[
@@ -58,10 +60,7 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
                 },
               )
             : const Center(
-                child: Text(
-                  'Game tidak ditemukan',
-                  style: TextStyle(fontSize: 16),
-                ),
+                child: Text('Resep tidak ditemukan'),
               ),
       ),
     );
