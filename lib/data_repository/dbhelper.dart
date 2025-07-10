@@ -1,85 +1,88 @@
 import 'dart:io';
-import 'package:retrostore/models/game_model.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-
-//Testing push
+import '../models/game_model.dart';
 
 class DbHelper {
+  static final DbHelper dbHelper = DbHelper._();
   late Database database;
-  static DbHelper dbHelper = DbHelper();
-  final String tableName = 'games';
-  final String namaColumn = 'nama';
-  final String idColumn = 'id';
-  final String isFavoriteColumn = 'isFavorite';
-  final String bahanColumn = 'bahan';
-  final String langkahColumn = 'langkah';
-  final String durasiMasakColumn = 'durasiMasak';
-  final String imageColumn = 'image';
 
-  initDatabase() async{
+  final String tableName = 'games';
+
+  DbHelper._();
+
+  Future<void> initDatabase() async {
     database = await connectToDatabase();
   }
 
-Future<Database> connectToDatabase() async{
-  Directory directory = await getApplicationDocumentsDirectory();
-  String path = '$directory/games.db';
-  return openDatabase(path,
-    version: 1,
-    onCreate: (db, version) {
-      db.execute(
-        'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,'
-        '$namaColumn TEXT, $durasiMasakColumn INTEGER,'
-        '$isFavoriteColumn INTEGER, $bahanColumn TEXT,'
-        '$langkahColumn TEXT, $imageColumn TEXT)');
-      },
-      onUpgrade: (db, oldVersion, newVersion){
-        db.execute(
-          'CREATE TABLE $tableName ($idColumn INTEGER PRIMARY KEY AUTOINCREMENT,'
-          '$namaColumn TEXT, $durasiMasakColumn INTEGER,'
-          '$isFavoriteColumn INTEGER, $bahanColumn TEXT, '
-          '$langkahColumn TEXT, $imageColumn TEXT)');
-        },
-      onDowngrade: (db, oldVersion, newVersion) {
-      db.delete(tableName);
+  Future<Database> connectToDatabase() async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    String path = join(dir.path, 'games.db');
+
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE $tableName (
+            gameID INTEGER PRIMARY KEY AUTOINCREMENT,
+            gameCode TEXT NOT NULL UNIQUE,
+            title TEXT NOT NULL,
+            genre TEXT NOT NULL,
+            platform TEXT NOT NULL,
+            price INTEGER NOT NULL,
+            releaseDate TEXT NOT NULL,
+            developer TEXT NOT NULL,
+            publisher TEXT NOT NULL,
+            description TEXT NOT NULL,
+            image TEXT NOT NULL,
+            videoLink TEXT NOT NULL,
+            adminID INTEGER NOT NULL,
+            isFavorite INTEGER NOT NULL
+          )
+        ''');
       },
     );
   }
-  Future<List<GameModel>> getAllGames() async{
-    List<Map<String, dynamic>> tasks = await database.query (tableName);
-    return tasks.map((e) => GameModel.fromMap(e)).toList();
-  }
-  
-  insertNewGame (GameModel gameModel) {
-    database.insert(tableName, gameModel.toMap());
+
+  // Ambil semua game
+  Future<List<GameModel>> getAllGames() async {
+    final List<Map<String, dynamic>> result = await database.query(tableName);
+    return result.map((e) => GameModel.fromMap(e)).toList();
   }
 
-  deleteGame (GameModel gameModel) {
-    database.delete (tableName, where: '$idColumn=?', whereArgs: [gameModel.id]);
+  // Tambah game baru
+  Future<void> insertNewGame(GameModel game) async {
+    await database.insert(tableName, game.toMap());
   }
 
-  deleteGames(){
-    database.delete (tableName);
-  }
-
-  updateGame(GameModel gameModel) async{
+  // Update game
+  Future<void> updateGame(GameModel game) async {
     await database.update(
       tableName,
-    {
-      isFavoriteColumn: gameModel.isFavorite ? 1:0,
-      namaColumn: gameModel.nama,
-      durasiMasakColumn: gameModel.durasiMasak,
-      imageColumn: gameModel.image!.path,
-      bahanColumn: gameModel.bahan,
-      langkahColumn: gameModel.langkah
-      },
-      where: '$idColumn=?',
-      whereArgs: [gameModel.id]);
+      game.toMap(),
+      where: 'gameID = ?',
+      whereArgs: [game.gameID],
+    );
   }
-  
-  updateIsFavorite (GameModel gameModel) {
-    database.update(
-    tableName, {isFavoriteColumn: ! gameModel.isFavorite ? 1:0},
-    where: '$idColumn=?', whereArgs: [gameModel.id]);
+
+  // Hapus game
+  Future<void> deleteGame(int gameID) async {
+    await database.delete(
+      tableName,
+      where: 'gameID = ?',
+      whereArgs: [gameID],
+    );
+  }
+
+  // Ubah favorit
+  Future<void> updateIsFavorite(GameModel game) async {
+    await database.update(
+      tableName,
+      {'isFavorite': game.isFavorite ? 1 : 0},
+      where: 'gameID = ?',
+      whereArgs: [game.gameID],
+    );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrostore/models/game_model.dart';
 import 'package:retrostore/ui/widgets/game_widget.dart';
-//test pulls
 
 // ignore: must_be_immutable
 class SearchGameScreen extends StatefulWidget {
@@ -17,11 +16,11 @@ class SearchGameScreen extends StatefulWidget {
 }
 
 class _SearchGameScreenState extends State<SearchGameScreen> {
-  void filterGames(value) {
+  void filterGames(String value) {
     setState(() {
       widget.filteredGames = widget.games
           .where((game) =>
-              game.nama.toLowerCase().contains(value.toLowerCase()))
+              game.title.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -31,25 +30,20 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
-          onChanged: (value) {
-            filterGames(value);
-          },
+          onChanged: filterGames,
+          style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            hintText: "Cari Resep",
-            hintStyle: TextStyle(color: Colors.white),
+            icon: Icon(Icons.search, color: Colors.white),
+            hintText: "Cari Game",
+            hintStyle: TextStyle(color: Colors.white70),
+            border: InputBorder.none,
           ),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.cancel),
             onPressed: () {
-              setState(() {
-                Navigator.pop(context);
-              });
+              Navigator.pop(context);
             },
           )
         ],
@@ -64,7 +58,10 @@ class _SearchGameScreenState extends State<SearchGameScreen> {
                 },
               )
             : const Center(
-                child: Text('Resep tidak ditemukan'),
+                child: Text(
+                  'Game tidak ditemukan',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
       ),
     );

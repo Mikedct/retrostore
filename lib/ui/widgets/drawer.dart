@@ -1,6 +1,6 @@
-import 'package:retrostore/providers/game_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:retrostore/providers/game_provider.dart';
 
 class DrawerList extends StatefulWidget {
   const DrawerList({super.key});
@@ -14,62 +14,67 @@ class _DrawerListState extends State<DrawerList> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Consumer<GameClass>(
-      builder: (BuildContext context, myProvider, Widget? child) => Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 200,
-            child: const Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('img/logo.png'),
-                radius: 50,
+    return Consumer<GameProvider>(
+      builder: (context, provider, _) => Drawer(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            const CircleAvatar(
+              backgroundImage: AssetImage('img/logo.png'),
+              radius: 50,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'RetroStore',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
               ),
             ),
-          ),
-          ListTile(
-            title: const Text('Home'),
-            leading: Icon(
-              Icons.home,
-              color: isDark ? Colors.white : Colors.black,
+            const SizedBox(height: 20),
+            const Divider(thickness: 1),
+            ListTile(
+              leading: Icon(Icons.home,
+                  color: isDark ? Colors.white : Colors.black),
+              title: const Text('Beranda'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/main_game_screen');
+              },
             ),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/main_game_screen');
-            },
-          ),
-          ListTile(
-            title: const Text('Resep Favorit'),
-            leading: const Icon(
-              Icons.favorite,
-              color: Colors.red,
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.red),
+              title: const Text('Game Favorit'),
+              onTap: () {
+                Navigator.pushReplacementNamed(
+                    context, '/favorite_games_screen');
+              },
             ),
-            onTap: () {
-              Navigator.pushReplacementNamed(
-                  context, '/favorite_games_screen');
-            },
-          ),
-          const Divider(thickness: 1),
-          ListTile(
-            title: const Text('Daftar Belanja'),
-            leading: Icon(
-              Icons.shopping_cart,
-              color: isDark ? Colors.white : Colors.black,
+            const Divider(thickness: 1),
+            ListTile(
+              leading: Icon(Icons.settings,
+                  color: isDark ? Colors.white : Colors.black),
+              title: const Text('Pengaturan'),
+              onTap: () {
+                // Tambahkan navigasi ke halaman pengaturan jika ada
+              },
             ),
-            onTap: () {},
-          ),
-          const Divider(thickness: 1),
-          ListTile(
-            title: Text(isDark ? 'Light Mode' : 'Dark Mode'),
-            leading: Icon(
-              isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-              color: isDark ? Colors.white : Colors.black,
+            const Spacer(),
+            const Divider(thickness: 1),
+            ListTile(
+              leading: Icon(
+                isDark ? Icons.light_mode : Icons.dark_mode,
+                color: isDark ? Colors.white : Colors.black,
+              ),
+              title: Text(isDark ? 'Light Mode' : 'Dark Mode'),
+              onTap: () {
+                provider.changeIsDark();
+                Navigator.pop(context);
+              },
             ),
-            onTap: () {
-              Provider.of<GameClass>(context, listen: false).changeIsDark();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

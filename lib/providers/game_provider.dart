@@ -3,59 +3,112 @@ import 'package:flutter/material.dart';
 import '../data_repository/dbhelper.dart';
 import '../models/game_model.dart';
 
-class GameClass extends ChangeNotifier {
-  GameClass() {
-    getGames();
+class GameProvider extends ChangeNotifier {
+  GameProvider() {
+    getGames(); // Ambil data game saat provider diinisialisasi
   }
 
   bool isDark = false;
-  changeIsDark() {
+  File? image; // File image yang diambil dari kamera/galeri
+  int adminID = 1; // Default adminID
+
+  // Toggle tema gelap/terang
+  void changeIsDark() {
     isDark = !isDark;
     notifyListeners();
   }
 
-  TextEditingController namaController = TextEditingController();
-  TextEditingController durasiMasakController = TextEditingController();
-  TextEditingController langkahController = TextEditingController();
-  TextEditingController bahanController = TextEditingController();
-  File? image;
+  // Controller untuk input data game
+  final TextEditingController gameCodeController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController genreController = TextEditingController();
+  final TextEditingController platformController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController releaseDateController = TextEditingController();
+  final TextEditingController developerController = TextEditingController();
+  final TextEditingController publisherController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController videoLinkController = TextEditingController();
 
   List<GameModel> allGames = [];
   List<GameModel> favoriteGames = [];
 
-  getGames() async {
+  // Ambil semua data game dari DB
+  Future<void> getGames() async {
     allGames = await DbHelper.dbHelper.getAllGames();
-    favoriteGames = allGames.where((e) => e.isFavorite).toList();
+    favoriteGames = allGames.where((g) => g.isFavorite).toList();
     notifyListeners();
   }
 
-  insertNewGame() {
-    GameModel gameModel = GameModel(
-      nama: namaController.text,
+  // Masukkan game baru
+  Future<void> insertNewGame() async {
+    final game = GameModel(
+      gameCode: gameCodeController.text,
+      title: titleController.text,
+      genre: genreController.text,
+      platform: platformController.text,
+      price: int.tryParse(priceController.text) ?? 0,
+      releaseDate: releaseDateController.text,
+      developer: developerController.text,
+      publisher: publisherController.text,
+      description: descriptionController.text,
+      image: image?.path ?? '', // Path gambar disimpan sebagai String
+      videoLink: videoLinkController.text,
+      adminID: adminID,
       isFavorite: false,
-      image: image,
-      bahan: bahanController.text,
-      langkah: langkahController.text,
-      durasiMasak: int.parse(durasiMasakController.text != ''
-          ? durasiMasakController.text
-          : '0'),
     );
-    DbHelper.dbHelper.insertNewGame(gameModel);
+
+    await DbHelper.dbHelper.insertNewGame(game);
+    clearControllers();
     getGames();
   }
 
-  updateGame(GameModel gameModel) async {
-    await DbHelper.dbHelper.updateGame(gameModel);
+  // Update game yang sudah ada
+  Future<void> updateGame(GameModel game) async {
+    await DbHelper.dbHelper.updateGame(game);
     getGames();
   }
 
-  updateIsFavorite(GameModel gameModel) {
-    DbHelper.dbHelper.updateIsFavorite(gameModel);
+  // Ubah status favorite
+  Future<void> updateIsFavorite(GameModel game) async {
+    game.isFavorite = !game.isFavorite;
+    await DbHelper.dbHelper.updateGame(game);
     getGames();
   }
 
-  deleteGame(GameModel gameModel) {
-    DbHelper.dbHelper.deleteGame(gameModel);
+  // Hapus game berdasarkan ID
+  Future<void> deleteGame(GameModel game) async {
+    await DbHelper.dbHelper.deleteGame(game.gameID!);
     getGames();
+  }
+
+  // Set controller dari model game (saat edit)
+  void setControllersFromGame(GameModel game) {
+    gameCodeController.text = game.gameCode;
+    titleController.text = game.title;
+    genreController.text = game.genre;
+    platformController.text = game.platform;
+    priceController.text = game.price.toString();
+    releaseDateController.text = game.releaseDate;
+    developerController.text = game.developer;
+    publisherController.text = game.publisher;
+    descriptionController.text = game.description;
+    videoLinkController.text = game.videoLink;
+    image = File(game.image); // Asumsikan path valid
+  }
+
+  // Reset semua controller
+  void clearControllers() {
+    gameCodeController.clear();
+    titleController.clear();
+    genreController.clear();
+    platformController.clear();
+    priceController.clear();
+    releaseDateController.clear();
+    developerController.clear();
+    publisherController.clear();
+    descriptionController.clear();
+    videoLinkController.clear();
+    image = null;
   }
 }

@@ -12,11 +12,13 @@ class NewGameScreen extends StatefulWidget {
 }
 
 class _NewGameScreenState extends State<NewGameScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   Future pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
     if (!mounted) return;
-    Provider.of<GameClass>(context, listen: false).image = File(image.path);
+    Provider.of<GameProvider>(context, listen: false).image = File(image.path);
     setState(() {});
   }
 
@@ -24,37 +26,31 @@ class _NewGameScreenState extends State<NewGameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Resep'),
+        title: const Text('Tambah Game'),
       ),
-      body: Consumer<GameClass>(
-        builder: (context, provider, child) => SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(5),
+      body: Consumer<GameProvider>(
+        builder: (context, provider, _) => SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
-                TextField(
-                  controller: provider.namaController,
-                  decoration: InputDecoration(
-                    label: const Text('Nama Resep'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
+                buildTextField('Game Code', provider.gameCodeController),
+                buildTextField('Title', provider.titleController),
+                buildTextField('Genre', provider.genreController),
+                buildTextField('Platform', provider.platformController),
+                buildTextField('Price', provider.priceController,
+                    keyboardType: TextInputType.number),
+                buildTextField('Release Date (yyyy-mm-dd)',
+                    provider.releaseDateController),
+                buildTextField('Developer', provider.developerController),
+                buildTextField('Publisher', provider.publisherController),
+                buildTextField('Description', provider.descriptionController,
+                    maxLines: 3),
+                buildTextField('Video Link', provider.videoLinkController),
+
                 const SizedBox(height: 20),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: provider.durasiMasakController,
-                  decoration: InputDecoration(
-                    label: const Text('Durasi masak (menit)'),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
+
                 Row(
                   children: [
                     PopupMenuButton(
@@ -64,9 +60,9 @@ class _NewGameScreenState extends State<NewGameScreen> {
                           onTap: () => pickImage(ImageSource.camera),
                           child: Row(
                             children: const [
-                              Icon(Icons.camera_alt_outlined),
+                              Icon(Icons.camera_alt),
                               SizedBox(width: 5),
-                              Text('Ambil Gambar'),
+                              Text('Ambil dari Kamera'),
                             ],
                           ),
                         ),
@@ -74,97 +70,79 @@ class _NewGameScreenState extends State<NewGameScreen> {
                           onTap: () => pickImage(ImageSource.gallery),
                           child: Row(
                             children: const [
-                              Icon(Icons.image_outlined),
+                              Icon(Icons.image),
                               SizedBox(width: 5),
-                              Text('Pilih gambar'),
+                              Text('Pilih dari Galeri'),
                             ],
                           ),
                         ),
                       ],
+                      child: const Icon(Icons.add_a_photo),
                     ),
-                    const Text(
-                      'Tambah Gambar',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    const SizedBox(width: 10),
+                    const Text('Tambah Gambar'),
                   ],
                 ),
-                Visibility(
-                  visible: provider.image != null,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                const SizedBox(height: 10),
+
+                if (provider.image != null)
+                  Stack(
+                    alignment: Alignment.topRight,
                     children: [
-                      InkWell(
-                        onTap: () {
+                      Image.file(
+                        provider.image!,
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.cancel, color: Colors.red),
+                        onPressed: () {
                           provider.image = null;
                           setState(() {});
                         },
-                        child: const Icon(
-                          Icons.cancel_outlined,
-                          color: Colors.red,
-                        ),
                       ),
-                      provider.image != null
-                          ? Image.file(
-                              provider.image!,
-                              width: 100,
-                              height: 100,
-                            )
-                          : Container(),
                     ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: SizedBox(
-                    height: 100,
-                    child: TextField(
-                      expands: true,
-                      maxLines: null,
-                      controller: provider.bahanController,
-                      decoration: InputDecoration(
-                        label: const Text('Bahan'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: SizedBox(
-                    height: 100,
-                    child: TextField(
-                      expands: true,
-                      maxLines: null,
-                      controller: provider.langkahController,
-                      decoration: InputDecoration(
-                        label: const Text('Langkah'),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
+
+                const SizedBox(height: 30),
+
                 ElevatedButton(
                   onPressed: () {
-                    provider.insertNewGame();
-                    provider.namaController.clear();
-                    provider.durasiMasakController.clear();
-                    provider.langkahController.clear();
-                    provider.bahanController.clear();
-                    provider.image = null;
-                    Navigator.of(context).pop();
+                    if (_formKey.currentState!.validate()) {
+                      provider.insertNewGame();
+                      provider.clearControllers();
+                      Navigator.of(context).pop();
+                    }
                   },
-                  child: const Center(child: Text('Simpan')),
+                  child: const Text('Simpan'),
                 ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(String label, TextEditingController controller,
+      {int maxLines = 1, TextInputType keyboardType = TextInputType.text}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '$label tidak boleh kosong';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
