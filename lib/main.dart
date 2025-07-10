@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
   @override
     Widget build (BuildContext context) {
       return MultiProvider (providers: [
-        ChangeNotifierProvider<RecipeClass>(
-          create: (context) => RecipeClass(),
+        ChangeNotifierProvider<GameClass>(
+          create: (context) => GameClass(),
         ), // Change NotifierProvider
       ],
     child: const InitApp()); // MultiProvider
@@ -30,7 +30,7 @@ class InitApp extends StatelessWidget {
   Widget build (BuildContext context) {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: Provider.of<RecipeClass> (context).isDark
+    theme: Provider.of<GameClass> (context).isDark
       ? ThemeData.dark()
       : ThemeData(
         primarySwatch: Colors.blue,
@@ -44,9 +44,9 @@ class InitApp extends StatelessWidget {
       title: 'gsk',
       home: const SplashScreen(),
       routes: {
-        '/favorite_recipes_screen': (context) => const FavoriteRecipesScreen(),
-        '/new_recipe_screen': (context) => const NewRecipeScreen(),
-        '/main_recipe_screen': (context) => const MainRecipeScreen(),
+        '/favorite_games_screen': (context) => const FavoriteGamesScreen(),
+        '/new_game_screen': (context) => const NewGameScreen(),
+        '/main_game_screen': (context) => const MainGameScreen(),
       },
     ); // MaterialApp
   }

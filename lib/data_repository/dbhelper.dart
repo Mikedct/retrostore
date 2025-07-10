@@ -8,7 +8,7 @@ import 'package:sqflite/sqflite.dart';
 class DbHelper {
   late Database database;
   static DbHelper dbHelper = DbHelper();
-  final String tableName = 'recipes';
+  final String tableName = 'games';
   final String namaColumn = 'nama';
   final String idColumn = 'id';
   final String isFavoriteColumn = 'isFavorite';
@@ -23,7 +23,7 @@ class DbHelper {
 
 Future<Database> connectToDatabase() async{
   Directory directory = await getApplicationDocumentsDirectory();
-  String path = '$directory/recipes.db';
+  String path = '$directory/games.db';
   return openDatabase(path,
     version: 1,
     onCreate: (db, version) {
@@ -45,41 +45,41 @@ Future<Database> connectToDatabase() async{
       },
     );
   }
-  Future<List<RecipeModel>> getAllRecipes() async{
+  Future<List<GameModel>> getAllGames() async{
     List<Map<String, dynamic>> tasks = await database.query (tableName);
-    return tasks.map((e) => RecipeModel.fromMap(e)).toList();
+    return tasks.map((e) => GameModel.fromMap(e)).toList();
   }
   
-  insertNewRecipe (RecipeModel recipeModel) {
-    database.insert(tableName, recipeModel.toMap());
+  insertNewGame (GameModel gameModel) {
+    database.insert(tableName, gameModel.toMap());
   }
 
-  deleteRecipe (RecipeModel recipeModel) {
-    database.delete (tableName, where: '$idColumn=?', whereArgs: [recipeModel.id]);
+  deleteGame (GameModel gameModel) {
+    database.delete (tableName, where: '$idColumn=?', whereArgs: [gameModel.id]);
   }
 
-  deleteRecipes(){
+  deleteGames(){
     database.delete (tableName);
   }
 
-  updateRecipe(RecipeModel recipeModel) async{
+  updateGame(GameModel gameModel) async{
     await database.update(
       tableName,
     {
-      isFavoriteColumn: recipeModel.isFavorite ? 1:0,
-      namaColumn: recipeModel.nama,
-      durasiMasakColumn: recipeModel.durasiMasak,
-      imageColumn: recipeModel.image!.path,
-      bahanColumn: recipeModel.bahan,
-      langkahColumn: recipeModel.langkah
+      isFavoriteColumn: gameModel.isFavorite ? 1:0,
+      namaColumn: gameModel.nama,
+      durasiMasakColumn: gameModel.durasiMasak,
+      imageColumn: gameModel.image!.path,
+      bahanColumn: gameModel.bahan,
+      langkahColumn: gameModel.langkah
       },
       where: '$idColumn=?',
-      whereArgs: [recipeModel.id]);
+      whereArgs: [gameModel.id]);
   }
   
-  updateIsFavorite (RecipeModel recipeModel) {
+  updateIsFavorite (GameModel gameModel) {
     database.update(
-    tableName, {isFavoriteColumn: ! recipeModel.isFavorite ? 1:0},
-    where: '$idColumn=?', whereArgs: [recipeModel.id]);
+    tableName, {isFavoriteColumn: ! gameModel.isFavorite ? 1:0},
+    where: '$idColumn=?', whereArgs: [gameModel.id]);
   }
 }

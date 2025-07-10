@@ -5,20 +5,20 @@ import 'package:retrostore/models/game_model.dart';
 import 'package:provider/provider.dart';
 import '../../providers/game_provider.dart';
 
-class EditRecipeScreen extends StatefulWidget {
-  final RecipeModel recipeModel;
-  const EditRecipeScreen({super.key, required this.recipeModel});
+class EditGameScreen extends StatefulWidget {
+  final GameModel gameModel;
+  const EditGameScreen({super.key, required this.gameModel});
 
   @override
-  State<EditRecipeScreen> createState() => _EditRecipeScreenState();
+  State<EditGameScreen> createState() => _EditGameScreenState();
 }
 
-class _EditRecipeScreenState extends State<EditRecipeScreen> {
+class _EditGameScreenState extends State<EditGameScreen> {
   Future pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
     if (!mounted) return;
-    Provider.of<RecipeClass>(context, listen: false).image = File(image.path);
+    Provider.of<GameClass>(context, listen: false).image = File(image.path);
     setState(() {});
   }
 
@@ -28,7 +28,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
       appBar: AppBar(
         title: const Text('Edit Resep'),
       ),
-      body: Consumer<RecipeClass>(
+      body: Consumer<GameClass>(
         builder: (context, provider, child) => SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(5),
@@ -154,15 +154,15 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    widget.recipeModel.nama = provider.namaController.text;
-                    widget.recipeModel.durasiMasak = int.parse(
+                    widget.gameModel.nama = provider.namaController.text;
+                    widget.gameModel.durasiMasak = int.parse(
                       provider.durasiMasakController.text != ''
                           ? provider.durasiMasakController.text
                           : '0',);
-                    widget.recipeModel.image = provider.image;
-                    widget.recipeModel.bahan = provider.bahanController.text;
-                    widget.recipeModel.langkah = provider.langkahController.text;
-                    provider.updateRecipe(widget.recipeModel);
+                    widget.gameModel.image = provider.image;
+                    widget.gameModel.bahan = provider.bahanController.text;
+                    widget.gameModel.langkah = provider.langkahController.text;
+                    provider.updateGame(widget.gameModel);
                     provider.namaController.clear();
                     provider.durasiMasakController.clear();
                     provider.bahanController.clear();

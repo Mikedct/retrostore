@@ -4,24 +4,24 @@ import 'package:retrostore/ui/widgets/game_widget.dart';
 //test pulls
 
 // ignore: must_be_immutable
-class SearchRecipeScreen extends StatefulWidget {
-  final List<RecipeModel> recipes;
-  List<RecipeModel> filteredRecipes = [];
+class SearchGameScreen extends StatefulWidget {
+  final List<GameModel> games;
+  List<GameModel> filteredGames = [];
 
-  SearchRecipeScreen({super.key, required this.recipes}) {
-    filteredRecipes = recipes;
+  SearchGameScreen({super.key, required this.games}) {
+    filteredGames = games;
   }
 
   @override
-  State<SearchRecipeScreen> createState() => _SearchRecipeScreenState();
+  State<SearchGameScreen> createState() => _SearchGameScreenState();
 }
 
-class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
-  void filterRecipes(value) {
+class _SearchGameScreenState extends State<SearchGameScreen> {
+  void filterGames(value) {
     setState(() {
-      widget.filteredRecipes = widget.recipes
-          .where((recipe) =>
-              recipe.nama.toLowerCase().contains(value.toLowerCase()))
+      widget.filteredGames = widget.games
+          .where((game) =>
+              game.nama.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -32,7 +32,7 @@ class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
       appBar: AppBar(
         title: TextField(
           onChanged: (value) {
-            filterRecipes(value);
+            filterGames(value);
           },
           decoration: const InputDecoration(
             icon: Icon(
@@ -56,11 +56,11 @@ class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: widget.filteredRecipes.isNotEmpty
+        child: widget.filteredGames.isNotEmpty
             ? ListView.builder(
-                itemCount: widget.filteredRecipes.length,
+                itemCount: widget.filteredGames.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return RecipeWidget(widget.filteredRecipes[index]);
+                  return GameWidget(widget.filteredGames[index]);
                 },
               )
             : const Center(

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-class RecipeModel {
+class GameModel {
   int? id;
   late String nama;
   late bool isFavorite;
@@ -9,7 +9,7 @@ class RecipeModel {
   late String bahan;
   late String langkah;
 
-  RecipeModel({
+  GameModel({
     this.id,
     required this.nama,
     required this.isFavorite,
@@ -31,8 +31,8 @@ class RecipeModel {
     };
   }
 
-  factory RecipeModel.fromMap(Map<String, dynamic> map) {
-    return RecipeModel(
+  factory GameModel.fromMap(Map<String, dynamic> map) {
+    return GameModel(
       id: map['id'],
       nama: map['nama'],
       isFavorite: map['isFavorite'] == 1 ? true : false,

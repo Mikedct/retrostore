@@ -6,12 +6,12 @@ import 'package:retrostore/providers/game_provider.dart';
 import 'package:retrostore/ui/screens/search_game_screen.dart';
 import '../widgets/game_widget.dart';
 // test
-class MainRecipeScreen extends StatelessWidget {
-  const MainRecipeScreen({super.key});
+class MainGameScreen extends StatelessWidget {
+  const MainGameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeClass>(
+    return Consumer<GameClass>(
       builder: (BuildContext context, myProvider, Widget? child) => Scaffold(
         appBar: AppBar(
           title: const Text('Resep'),
@@ -19,8 +19,8 @@ class MainRecipeScreen extends StatelessWidget {
             InkWell(
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: ((context) => SearchRecipeScreen(
-                        recipes: myProvider.allRecipes,
+                  builder: ((context) => SearchGameScreen(
+                        games: myProvider.allGames,
                       )),
                 ),
               ),
@@ -31,9 +31,9 @@ class MainRecipeScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Navigator.pushNamed(context, '/new_recipe_screen');
+            await Navigator.pushNamed(context, '/new_game_screen');
             if (!context.mounted) return;
-            Navigator.pushReplacementNamed(context, '/main_recipe_screen');
+            Navigator.pushReplacementNamed(context, '/main_game_screen');
           },
           child: const Icon(Icons.add),
         ),
@@ -42,9 +42,9 @@ class MainRecipeScreen extends StatelessWidget {
           child: DrawerList(),
         ),
         body: ListView.builder(
-          itemCount: myProvider.allRecipes.length,
+          itemCount: myProvider.allGames.length,
           itemBuilder: (context, index) {
-            return RecipeWidget(myProvider.allRecipes[index]);
+            return GameWidget(myProvider.allGames[index]);
           },
         ),
       ),

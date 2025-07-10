@@ -4,9 +4,9 @@ import 'package:retrostore/ui/screens/show_game_screen.dart';
 import 'package:provider/provider.dart';
 import '../../models/game_model.dart';
 
-class RecipeWidget extends StatelessWidget {
-  final RecipeModel recipeModel;
-  const RecipeWidget(this.recipeModel, {super.key});
+class GameWidget extends StatelessWidget {
+  final GameModel gameModel;
+  const GameWidget(this.gameModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class RecipeWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: ((context) =>
-              ShowRecipeScreen(recipeModel: recipeModel))),
+              ShowGameScreen(gameModel: gameModel))),
         );
       },
       child: Container(
@@ -25,13 +25,13 @@ class RecipeWidget extends StatelessWidget {
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(5), 
         child: ListTile(
-          tileColor: !Provider.of<RecipeClass>(context).isDark
+          tileColor: !Provider.of<GameClass>(context).isDark
             ? Colors.blue[100]
             : null,
-          leading: recipeModel.image == null
+          leading: gameModel.image == null
             ? Container(
                 decoration: BoxDecoration(
-                  color: !Provider.of<RecipeClass>(context).isDark
+                  color: !Provider.of<GameClass>(context).isDark
                       ? Colors.blue
                       : null,
                   borderRadius: BorderRadius.circular(8)),
@@ -42,17 +42,17 @@ class RecipeWidget extends StatelessWidget {
                     backgroundImage: AssetImage('img/logo.png'),
                   )))
                 : Image.file(
-                recipeModel.image!,
+                gameModel.image!,
                 width: 70,
                 height: double.infinity,
               ),
-              title: Text(recipeModel.nama),
-              subtitle: Text('${recipeModel.durasiMasak} mins'),
+              title: Text(gameModel.nama),
+              subtitle: Text('${gameModel.durasiMasak} mins'),
               trailing: InkWell(
                 onTap: () {
-                  Provider.of<RecipeClass>(context, listen: false).updateIsFavorite(recipeModel);
+                  Provider.of<GameClass>(context, listen: false).updateIsFavorite(gameModel);
                 },
-            child: recipeModel.isFavorite
+            child: gameModel.isFavorite
               ? const Icon(
                   Icons.favorite,
                   color: Colors.red,

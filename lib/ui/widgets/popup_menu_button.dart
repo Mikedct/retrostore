@@ -13,7 +13,7 @@ class MyPopupMenuButton extends StatefulWidget {
 class _MyPopupMenuButtonState extends State<MyPopupMenuButton> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeClass>(
+    return Consumer<GameClass>(
       builder: (BuildContext context, myProvider, Widget? child) =>
           PopupMenuButton(
         color: myProvider.isDark ? Colors.blue[200] : null,

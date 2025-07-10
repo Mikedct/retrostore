@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
       radius:40,
       ), // CircleAvatar
     ), // CircleAvatar
-    nextScreen: const MainRecipeScreen(),
+    nextScreen: const MainGameScreen(),
     splashTransition: SplashTransition.rotationTransition,
     backgroundColor: Colors.black,); // AnimatedSplashScreen
   }

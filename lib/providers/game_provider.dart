@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../data_repository/dbhelper.dart';
 import '../models/game_model.dart';
 
-class RecipeClass extends ChangeNotifier {
-  RecipeClass() {
-    getRecipes();
+class GameClass extends ChangeNotifier {
+  GameClass() {
+    getGames();
   }
 
   bool isDark = false;
@@ -20,17 +20,17 @@ class RecipeClass extends ChangeNotifier {
   TextEditingController bahanController = TextEditingController();
   File? image;
 
-  List<RecipeModel> allRecipes = [];
-  List<RecipeModel> favoriteRecipes = [];
+  List<GameModel> allGames = [];
+  List<GameModel> favoriteGames = [];
 
-  getRecipes() async {
-    allRecipes = await DbHelper.dbHelper.getAllRecipes();
-    favoriteRecipes = allRecipes.where((e) => e.isFavorite).toList();
+  getGames() async {
+    allGames = await DbHelper.dbHelper.getAllGames();
+    favoriteGames = allGames.where((e) => e.isFavorite).toList();
     notifyListeners();
   }
 
-  insertNewRecipe() {
-    RecipeModel recipeModel = RecipeModel(
+  insertNewGame() {
+    GameModel gameModel = GameModel(
       nama: namaController.text,
       isFavorite: false,
       image: image,
@@ -40,22 +40,22 @@ class RecipeClass extends ChangeNotifier {
           ? durasiMasakController.text
           : '0'),
     );
-    DbHelper.dbHelper.insertNewRecipe(recipeModel);
-    getRecipes();
+    DbHelper.dbHelper.insertNewGame(gameModel);
+    getGames();
   }
 
-  updateRecipe(RecipeModel recipeModel) async {
-    await DbHelper.dbHelper.updateRecipe(recipeModel);
-    getRecipes();
+  updateGame(GameModel gameModel) async {
+    await DbHelper.dbHelper.updateGame(gameModel);
+    getGames();
   }
 
-  updateIsFavorite(RecipeModel recipeModel) {
-    DbHelper.dbHelper.updateIsFavorite(recipeModel);
-    getRecipes();
+  updateIsFavorite(GameModel gameModel) {
+    DbHelper.dbHelper.updateIsFavorite(gameModel);
+    getGames();
   }
 
-  deleteRecipe(RecipeModel recipeModel) {
-    DbHelper.dbHelper.deleteRecipe(recipeModel);
-    getRecipes();
+  deleteGame(GameModel gameModel) {
+    DbHelper.dbHelper.deleteGame(gameModel);
+    getGames();
   }
 }

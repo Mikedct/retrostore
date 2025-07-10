@@ -4,29 +4,29 @@ import 'package:retrostore/providers/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'edit_game_screen.dart';
 
-class ShowRecipeScreen extends StatelessWidget {
-  final RecipeModel recipeModel;
-  const ShowRecipeScreen({super.key, required this.recipeModel});
+class ShowGameScreen extends StatelessWidget {
+  final GameModel gameModel;
+  const ShowGameScreen({super.key, required this.gameModel});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeClass>(
+    return Consumer<GameClass>(
       builder: (context, provider, child) => Scaffold(
         appBar: AppBar(
           actions: [
             InkWell(
               onTap: () {
-                provider.namaController.text = recipeModel.nama;
+                provider.namaController.text = gameModel.nama;
                 provider.durasiMasakController.text =
-                    recipeModel.durasiMasak.toString();
-                provider.bahanController.text = recipeModel.bahan;
-                provider.langkahController.text = recipeModel.langkah;
-                provider.image = recipeModel.image;
+                    gameModel.durasiMasak.toString();
+                provider.bahanController.text = gameModel.bahan;
+                provider.langkahController.text = gameModel.langkah;
+                provider.image = gameModel.image;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: ((context) =>
-                        EditRecipeScreen(recipeModel: recipeModel)),
+                        EditGameScreen(gameModel: gameModel)),
                   ),
                 );
               },
@@ -35,7 +35,7 @@ class ShowRecipeScreen extends StatelessWidget {
             const SizedBox(width: 20),
             InkWell(
               onTap: () {
-                provider.deleteRecipe(recipeModel);
+                provider.deleteGame(gameModel);
                 Navigator.pop(context);
               },
               child: const Icon(Icons.delete),
@@ -48,25 +48,25 @@ class ShowRecipeScreen extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: !Provider.of<RecipeClass>(context).isDark
+                  color: !Provider.of<GameClass>(context).isDark
                       ? Colors.blue[100]
                       : null,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 height: 170,
-                child: recipeModel.image == null
+                child: gameModel.image == null
                     ? const Center(
                         child: CircleAvatar(
                           radius: 40,
                           backgroundImage: AssetImage('img/logo.png'),
                         ),
                       )
-                    : Image.file(recipeModel.image!),
+                    : Image.file(gameModel.image!),
               ),
               const SizedBox(height: 10),
               Center(
                 child: Text(
-                  recipeModel.nama,
+                  gameModel.nama,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class ShowRecipeScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: !Provider.of<RecipeClass>(context).isDark
+                  color: !Provider.of<GameClass>(context).isDark
                       ? Colors.blue[100]
                       : null,
                   borderRadius: BorderRadius.circular(10),
@@ -91,7 +91,7 @@ class ShowRecipeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      '${recipeModel.durasiMasak} menit',
+                      '${gameModel.durasiMasak} menit',
                       style: const TextStyle(fontSize: 16),
                     ),
                   ],
@@ -102,7 +102,7 @@ class ShowRecipeScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: !Provider.of<RecipeClass>(context).isDark
+                  color: !Provider.of<GameClass>(context).isDark
                       ? Colors.blue[100]
                       : null,
                   borderRadius: BorderRadius.circular(10),
@@ -117,7 +117,7 @@ class ShowRecipeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      recipeModel.bahan,
+                      gameModel.bahan,
                       style: const TextStyle(fontSize: 26),
                     ),
                   ],
@@ -128,7 +128,7 @@ class ShowRecipeScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: !Provider.of<RecipeClass>(context).isDark
+                  color: !Provider.of<GameClass>(context).isDark
                       ? Colors.blue[100]
                       : null,
                   borderRadius: BorderRadius.circular(10),
@@ -143,7 +143,7 @@ class ShowRecipeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      recipeModel.langkah,
+                      gameModel.langkah,
                       style: const TextStyle(fontSize: 26),
                     ),
                   ],

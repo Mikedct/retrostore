@@ -4,19 +4,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../providers/game_provider.dart';
 
-class NewRecipeScreen extends StatefulWidget {
-  const NewRecipeScreen({super.key});
+class NewGameScreen extends StatefulWidget {
+  const NewGameScreen({super.key});
 
   @override
-  State<NewRecipeScreen> createState() => _NewRecipeScreenState();
+  State<NewGameScreen> createState() => _NewGameScreenState();
 }
 
-class _NewRecipeScreenState extends State<NewRecipeScreen> {
+class _NewGameScreenState extends State<NewGameScreen> {
   Future pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
     if (!mounted) return;
-    Provider.of<RecipeClass>(context, listen: false).image = File(image.path);
+    Provider.of<GameClass>(context, listen: false).image = File(image.path);
     setState(() {});
   }
 
@@ -26,7 +26,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
       appBar: AppBar(
         title: const Text('Tambah Resep'),
       ),
-      body: Consumer<RecipeClass>(
+      body: Consumer<GameClass>(
         builder: (context, provider, child) => SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(5),
@@ -152,7 +152,7 @@ class _NewRecipeScreenState extends State<NewRecipeScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    provider.insertNewRecipe();
+                    provider.insertNewGame();
                     provider.namaController.clear();
                     provider.durasiMasakController.clear();
                     provider.langkahController.clear();

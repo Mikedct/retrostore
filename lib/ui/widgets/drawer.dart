@@ -14,7 +14,7 @@ class _DrawerListState extends State<DrawerList> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Consumer<RecipeClass>(
+    return Consumer<GameClass>(
       builder: (BuildContext context, myProvider, Widget? child) => Column(
         children: [
           SizedBox(
@@ -34,7 +34,7 @@ class _DrawerListState extends State<DrawerList> {
               color: isDark ? Colors.white : Colors.black,
             ),
             onTap: () {
-              Navigator.pushReplacementNamed(context, '/main_recipe_screen');
+              Navigator.pushReplacementNamed(context, '/main_game_screen');
             },
           ),
           ListTile(
@@ -45,7 +45,7 @@ class _DrawerListState extends State<DrawerList> {
             ),
             onTap: () {
               Navigator.pushReplacementNamed(
-                  context, '/favorite_recipes_screen');
+                  context, '/favorite_games_screen');
             },
           ),
           const Divider(thickness: 1),
@@ -65,7 +65,7 @@ class _DrawerListState extends State<DrawerList> {
               color: isDark ? Colors.white : Colors.black,
             ),
             onTap: () {
-              Provider.of<RecipeClass>(context, listen: false).changeIsDark();
+              Provider.of<GameClass>(context, listen: false).changeIsDark();
               Navigator.pop(context);
             },
           ),

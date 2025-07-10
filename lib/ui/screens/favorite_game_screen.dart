@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import '../../providers/game_provider.dart';
 import '../widgets/game_widget.dart';
 
-class FavoriteRecipesScreen extends StatelessWidget {
-  const FavoriteRecipesScreen({super.key});
+class FavoriteGamesScreen extends StatelessWidget {
+  const FavoriteGamesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RecipeClass>(
+    return Consumer<GameClass>(
       builder: (BuildContext context, myProvider, Widget? child) {
         return Scaffold(
           appBar: AppBar(
@@ -35,8 +35,8 @@ class FavoriteRecipesScreen extends StatelessWidget {
               InkWell(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: ((context) => SearchRecipeScreen(
-                          recipes: myProvider.favoriteRecipes,
+                    builder: ((context) => SearchGameScreen(
+                          games: myProvider.favoriteGames,
                         )),
                   ),
                 ),
@@ -49,9 +49,9 @@ class FavoriteRecipesScreen extends StatelessWidget {
             child: DrawerList(),
           ),
           body: ListView.builder(
-            itemCount: myProvider.favoriteRecipes.length,
+            itemCount: myProvider.favoriteGames.length,
             itemBuilder: (context, index) {
-              return RecipeWidget(myProvider.favoriteRecipes[index]);
+              return GameWidget(myProvider.favoriteGames[index]);
             },
           ),
         );
