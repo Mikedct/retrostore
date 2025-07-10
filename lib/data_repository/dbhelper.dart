@@ -42,7 +42,40 @@ class DbHelper {
             isFavorite INTEGER NOT NULL
           )
         ''');
-      },
+
+        // Tambahkan data awal
+        await db.insert('$tableName', {
+          'gameCode': 'AC001',
+          'title': 'Contra',
+          'genre': 'Action',
+          'platform': 'Nintendo Entertainment System (NES)',
+          'price': 0,
+          'releaseDate': '1987-02-20',
+          'developer': 'Konami',
+          'publisher': 'Konami',
+          'description': 'Contra is a run-and-gun action platformer video game notorious for its high difficulty.',
+          'image': 'contra.png',
+          'videoLink': 'https://www.youtube.com/embed/OotQrKEqe94',
+          'adminID': 1,
+          'isFavorite': 0,
+        });
+
+        await db.insert('$tableName', {
+          'gameCode': 'PZ003',
+          'title': 'Tetris',
+          'genre': 'Puzzle',
+          'platform': 'Nintendo Entertainment System (NES)',
+          'price': 0,
+          'releaseDate': '1984-06-06',
+          'developer': 'Nintendo',
+          'publisher': 'Nintendo',
+          'description': 'Tetris is a tile-matching video game created by Russian software engineer Alexey Pajitnov in 1984.',
+          'image': 'tetris.png',
+          'videoLink': 'https://www.youtube.com/embed/c80dVYcL69E',
+          'adminID': 2,
+          'isFavorite': 0,
+        });
+      }
     );
   }
 
