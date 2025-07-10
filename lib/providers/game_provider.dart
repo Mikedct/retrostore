@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../data_repository/dbhelper.dart';
-import '../models/recipe_model.dart';
+import '../models/game_model.dart';
 
 class RecipeClass extends ChangeNotifier {
   RecipeClass() {

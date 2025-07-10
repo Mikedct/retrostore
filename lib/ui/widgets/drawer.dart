@@ -1,4 +1,4 @@
-import 'package:retrostore/providers/recipe_provider.dart';
+import 'package:retrostore/providers/game_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

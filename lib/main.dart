@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/recipe_provider.dart';
-import '../ui/screens/favorite_recipes_screen.dart';
-import '../ui/screens/main_recipe_screen.dart';
-import '../ui/screens/new_recipe_screen.dart';
+import '../providers/game_provider.dart';
+import '../ui/screens/favorite_game_screen.dart';
+import '../ui/screens/main_game_screen.dart';
+import '../ui/screens/new_game_screen.dart';
 import '../ui/screens/splash_screen.dart';
 import 'data_repository/dbhelper.dart';
 void main() async {

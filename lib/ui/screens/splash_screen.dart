@@ -1,5 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:retrostore/ui/screens/main_recipe_screen.dart';
+import 'package:retrostore/ui/screens/main_game_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {

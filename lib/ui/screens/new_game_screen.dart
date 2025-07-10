@@ -1,19 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:retrostore/models/recipe_model.dart';
 import 'package:provider/provider.dart';
-import '../../providers/recipe_provider.dart';
+import '../../providers/game_provider.dart';
 
-class EditRecipeScreen extends StatefulWidget {
-  final RecipeModel recipeModel;
-  const EditRecipeScreen({super.key, required this.recipeModel});
+class NewRecipeScreen extends StatefulWidget {
+  const NewRecipeScreen({super.key});
 
   @override
-  State<EditRecipeScreen> createState() => _EditRecipeScreenState();
+  State<NewRecipeScreen> createState() => _NewRecipeScreenState();
 }
 
-class _EditRecipeScreenState extends State<EditRecipeScreen> {
+class _NewRecipeScreenState extends State<NewRecipeScreen> {
   Future pickImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
@@ -26,7 +24,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Resep'),
+        title: const Text('Tambah Resep'),
       ),
       body: Consumer<RecipeClass>(
         builder: (context, provider, child) => SingleChildScrollView(
@@ -50,7 +48,7 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                   keyboardType: TextInputType.number,
                   controller: provider.durasiMasakController,
                   decoration: InputDecoration(
-                    label: const Text('Durasi Masak (menit)'),
+                    label: const Text('Durasi masak (menit)'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -61,28 +59,28 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                   children: [
                     PopupMenuButton(
                       color: !provider.isDark ? Colors.blue[100] : null,
-                      itemBuilder: ((context) => [
-                            PopupMenuItem(
-                              onTap: () => pickImage(ImageSource.camera),
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.camera_alt_outlined),
-                                  SizedBox(width: 5),
-                                  Text('Ambil gambar'),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              onTap: () => pickImage(ImageSource.gallery),
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.image_outlined),
-                                  SizedBox(width: 5),
-                                  Text('Pilih gambar'),
-                                ],
-                              ),
-                            ),
-                          ]),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          onTap: () => pickImage(ImageSource.camera),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.camera_alt_outlined),
+                              SizedBox(width: 5),
+                              Text('Ambil Gambar'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          onTap: () => pickImage(ImageSource.gallery),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.image_outlined),
+                              SizedBox(width: 5),
+                              Text('Pilih gambar'),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const Text(
                       'Tambah Gambar',
@@ -154,24 +152,15 @@ class _EditRecipeScreenState extends State<EditRecipeScreen> {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    widget.recipeModel.nama = provider.namaController.text;
-                    widget.recipeModel.durasiMasak = int.parse(
-                      provider.durasiMasakController.text != ''
-                          ? provider.durasiMasakController.text
-                          : '0',);
-                    widget.recipeModel.image = provider.image;
-                    widget.recipeModel.bahan = provider.bahanController.text;
-                    widget.recipeModel.langkah = provider.langkahController.text;
-                    provider.updateRecipe(widget.recipeModel);
+                    provider.insertNewRecipe();
                     provider.namaController.clear();
                     provider.durasiMasakController.clear();
-                    provider.bahanController.clear();
                     provider.langkahController.clear();
+                    provider.bahanController.clear();
                     provider.image = null;
-
                     Navigator.of(context).pop();
                   },
-                  child: const Center(child: Text('Simpan Perubahan')),
+                  child: const Center(child: Text('Simpan')),
                 ),
               ],
             ),

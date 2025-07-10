@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:retrostore/models/recipe_model.dart';
+import 'package:retrostore/models/game_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 

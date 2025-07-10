@@ -1,10 +1,10 @@
-import 'package:retrostore/ui/screens/search_recipe_screen.dart';
+import 'package:retrostore/ui/screens/search_game_screen.dart';
 import 'package:retrostore/ui/widgets/drawer.dart';
 import 'package:retrostore/ui/widgets/popup_menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/recipe_provider.dart';
-import '../widgets/recipe_widget.dart';
+import '../../providers/game_provider.dart';
+import '../widgets/game_widget.dart';
 
 class FavoriteRecipesScreen extends StatelessWidget {
   const FavoriteRecipesScreen({super.key});

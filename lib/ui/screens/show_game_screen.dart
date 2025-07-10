@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:retrostore/models/recipe_model.dart';
-import 'package:retrostore/providers/recipe_provider.dart';
+import 'package:retrostore/models/game_model.dart';
+import 'package:retrostore/providers/game_provider.dart';
 import 'package:provider/provider.dart';
-import 'edit_recipe_screen.dart';
+import 'edit_game_screen.dart';
 
 class ShowRecipeScreen extends StatelessWidget {
   final RecipeModel recipeModel;
