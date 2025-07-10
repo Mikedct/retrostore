@@ -22,7 +22,7 @@ class _DrawerListState extends State<DrawerList> {
             height: 200,
             child: const Center(
               child: CircleAvatar(
-                backgroundImage: AssetImage('img/logo.jpg'),
+                backgroundImage: AssetImage('img/logo.png'),
                 radius: 50,
               ),
             ),
