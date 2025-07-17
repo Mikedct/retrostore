@@ -30,11 +30,11 @@ class GameWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         padding: const EdgeInsets.all(4),
         child: ListTile(
-          leading: (gameModel.image != null && gameModel.image!.isNotEmpty)
+          leading: (gameModel.image.isNotEmpty)
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.file(
-                    File(gameModel.image!),
+                    File(gameModel.image),
                     width: 70,
                     height: 70,
                     fit: BoxFit.cover,
